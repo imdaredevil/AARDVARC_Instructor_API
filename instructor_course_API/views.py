@@ -6,7 +6,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from AARDVARC.accounts.authentication import ExpiringTokenAuthentication
 from rest_framework.authentication import BasicAuthentication
-from .models import Instructor
+from .models import Instructor, IsCoOrdinator
 from rest_framework.authtoken.models import Token
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 import traceback
@@ -17,7 +17,7 @@ class InstructorCourseView(viewsets.ViewSet):
     """
     Returns the **course codes** for all the **active appointments** for the given **instructor**
     
-     - The request must be authenticated using bearer token
+     - The request must be authenticated using bearer token ( Authorization: "Bearer <token>")
      - The token can be obtained by the Token API
     """
     permission_classes = [permissions.IsAuthenticated]
@@ -30,7 +30,25 @@ class InstructorCourseView(viewsets.ViewSet):
                            required=True),
         ],
         responses={
-            200: OpenApiResponse(description="The course codes are returned"), 
+            200: OpenApiResponse(description="""
+            The courses for the given instructor are returned in JSON format.
+            The data field in the response JSON contains an array of objects
+            each of which represents a course and has the following fields
+            {
+                "course_code" : course code to generate the link,
+                "start_date" : start date of the course,
+                "end_date" : end date of the course,
+                "start_time": default start time of the course,
+                "end_time": default end time of the course
+                "location": location of the course
+                "description": description of the course  
+                "program": program which the course belong to
+                "semester": semester in which the course in handled
+                "appointment_title": the title of the instructor's appointment
+                "instructor_role": tells whether, the instructor role is "instructor" or "co-ordinator"
+                "office_hours": the office hours of the instructor for the course
+            }
+            """), 
             401: OpenApiResponse(description="invalid token or the token is expired"),
             400: OpenApiResponse(description="The email is not given as parameter"), 
             404: OpenApiResponse(description="Instructor or instructor appointments not found") 
@@ -57,10 +75,30 @@ class InstructorCourseView(viewsets.ViewSet):
                 result = []
                 for instructor_appointment in instructor_appointments:
                     course_instructors = instructor_appointment.courseinstructor_set.all()
-                    result.extend([{ "classCode" : course_instructor.courseId.classCode } for course_instructor in course_instructors])
+                    for course_instructor in course_instructors:
+                        course = course_instructor.courseId
+                        instructor_role = 'Instructor'
+                        if course_instructor.coord == IsCoOrdinator.COORDINATOR:
+                            instructor_role = 'Coordinator'
+                        result.append({
+                            "course_code" : course.classCode,
+                            "start_date" : course.startDate,
+                            "end_date" : course.endDate,
+                            "start_time": course.defaultStartTime,
+                            "end_time": course.defaultEndTime,
+                            "location": course.location,
+                            "description": course.description, 
+                            "program": course.programId,
+                            "semester": course.semesterId,
+                            "appointment_title": instructor_appointment.title,
+                            "instructor_role": instructor_role, 
+                            "office_hours": course_instructor.officeHours
+                     })
                 return Response(result)
         except:
                 return Response({"error" : traceback.print_exc() }, status=500)
+
+
 
 class AuthView(viewsets.ViewSet):
     """
