@@ -1,4 +1,5 @@
 
+from drf_spectacular.types import OpenApiTypes
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from AARDVARC.accounts.authentication import ExpiringTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from .models import Instructor
 from rest_framework.authtoken.models import Token
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 
 
 
@@ -17,12 +19,19 @@ class InstructorCourseView(viewsets.ViewSet):
     """
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [ExpiringTokenAuthentication, SessionAuthentication]
+    @extend_schema(
+        parameters=[
+          OpenApiParameter(name="email", 
+                           type=OpenApiTypes.STR,
+                           description="the email of the instructor",
+                           required=True),
+        ],
+        responses={
+            200: OpenApiResponse(description="The course codes are returned"), 
+        400: OpenApiResponse(description="The email is not given as parameter"), 
+        404: OpenApiResponse(description="Instructor or instructor appointments not found") 
+        })
     def list(self, request, format=None):
-        """
-        returns the course codes for all the active appointments for the given instructor
-        While calling it from another service ( eg. Postman ) use bearer token authentication.
-        The token can be obtained by the Token API with user name and client secret provided to you by the admin
-        """
         instructor_email = request.GET.get("email")
         if not instructor_email:
             return Response({
