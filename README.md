@@ -32,8 +32,26 @@ The database tables can be populated using the admin portal.
 
 *For example, the field **officeHours** in the table **CourseInstructor** is a non NULL field. But, it can be left blank while creating entries since they are not useful for the API. If needed, they can be made as required fields*
 
+
+
+https://user-images.githubusercontent.com/21989232/135854764-ffc7eb6a-9690-4ab2-acc0-6ab7e71d5b20.mp4
+
+
+
 ### API Documentation
 
 The swagger docs fot the API can be found by visiting <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+
+**Auth Token**
+
+
+https://user-images.githubusercontent.com/21989232/135856300-2ac70265-70a7-467e-a43c-a629cea6da30.mp4
+
+
+**Courses**
+
+
+https://user-images.githubusercontent.com/21989232/135856362-2819c3c9-e5ed-423b-88f9-472c37ca331f.mp4
+
 
 The postman collection is also available in the name "AARDVARC_Instructor_API.postman_collection.json"
