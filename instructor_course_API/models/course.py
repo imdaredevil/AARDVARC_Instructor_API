@@ -24,10 +24,10 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     units = models.SmallIntegerField()
     level = models.SmallIntegerField()
-    startDate = models.DateField('start date', blank=True)
-    endDate = models.DateField('end date', blank=True)
-    defaultStartTime = models.TimeField('default start time', blank=True)
-    defaultEndTime = models.TimeField('default end time', blank=True)
+    startDate = models.DateField('start date', blank=True, null=True)
+    endDate = models.DateField('end date', blank=True, null=True)
+    defaultStartTime = models.TimeField('default start time', blank=True, null=True)
+    defaultEndTime = models.TimeField('default end time', blank=True, null=True)
     irregularTimes = models.SmallIntegerField(choices=isIrregularTime.choices, default=isIrregularTime.REGULAR_TIME)
     dow = models.CharField(max_length=7)
     ohtime = models.TextField(blank=True, default='')
@@ -46,7 +46,7 @@ class Course(models.Model):
     useCondensedSchedule = models.SmallIntegerField(choices=UseCondensedSchedule.choices, default=UseCondensedSchedule.NOT_USE)
     templateId = models.IntegerField() # since those tables are not present, foreign key is given as integer
     extraFields = models.TextField(blank=True, default='')
-    programYear = models.CharField(max_length=250, blank=True, default='')
+    programYear = models.CharField(max_length=250, blank=True, null=True)
     class Meta:
         constraints = [
             models.CheckConstraint(

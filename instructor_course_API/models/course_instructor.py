@@ -9,10 +9,10 @@ class IsCoOrdinator(models.IntegerChoices):
 class IsEval(models.IntegerChoices):
         EVALUATOR = 1
         NOT_EVALUATOR = 0
-
+        
 class CourseInstructor(models.Model):
     coord = models.SmallIntegerField(choices=IsCoOrdinator.choices)
-    eval = models.SmallIntegerField(choices=IsEval.choices, blank=True)
+    eval = models.SmallIntegerField(choices=IsEval.choices, null=True,blank=True)
     courseId = models.ForeignKey(Course, on_delete=models.CASCADE)
     instructorId = models.ForeignKey(InstructorAppointment, on_delete=models.CASCADE)
     officeHours = models.TextField(blank=True)

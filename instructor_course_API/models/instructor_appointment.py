@@ -12,7 +12,7 @@ class LimitedEngagementEligible(models.IntegerChoices):
 class InstructorAppointment(models.Model):
     type = models.IntegerField()
     active = models.SmallIntegerField(choices=Active.choices)
-    vendorNumber = models.CharField(max_length=12, blank=True, default=True)
+    vendorNumber = models.CharField(max_length=12, blank=True, null=True)
     homeDepartment = models.IntegerField() # since those tables are not present, foreign key is given as integer
     instructorId = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     fullTime = models.SmallIntegerField()
