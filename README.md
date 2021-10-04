@@ -35,3 +35,5 @@ The database tables can be populated using the admin portal.
 ### API Documentation
 
 The swagger docs fot the API can be found by visiting <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+
+The postman collection is also available in the name "AARDVARC_Instructor_API.postman_collection.json"
