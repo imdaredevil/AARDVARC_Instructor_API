@@ -42,4 +42,16 @@ https://user-images.githubusercontent.com/21989232/135854764-ffc7eb6a-9690-4ab2-
 
 The swagger docs fot the API can be found by visiting <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
 
+**Auth Token**
+
+
+https://user-images.githubusercontent.com/21989232/135856300-2ac70265-70a7-467e-a43c-a629cea6da30.mp4
+
+
+**Courses**
+
+
+https://user-images.githubusercontent.com/21989232/135856362-2819c3c9-e5ed-423b-88f9-472c37ca331f.mp4
+
+
 The postman collection is also available in the name "AARDVARC_Instructor_API.postman_collection.json"
