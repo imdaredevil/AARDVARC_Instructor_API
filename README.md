@@ -32,6 +32,12 @@ The database tables can be populated using the admin portal.
 
 *For example, the field **officeHours** in the table **CourseInstructor** is a non NULL field. But, it can be left blank while creating entries since they are not useful for the API. If needed, they can be made as required fields*
 
+
+
+https://user-images.githubusercontent.com/21989232/135854764-ffc7eb6a-9690-4ab2-acc0-6ab7e71d5b20.mp4
+
+
+
 ### API Documentation
 
 The swagger docs fot the API can be found by visiting <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
