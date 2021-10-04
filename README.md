@@ -25,7 +25,7 @@ Run the server
 python3 manage.py runserver
 ```
 
-The admin portal can be accessed by visiting the URL http://localhost:8000/admin
+The admin portal can be accessed by visiting the URL http://localhost:8000/admin{:target="_blank"}
 
 The database tables can be populated using the admin portal. 
 
@@ -35,4 +35,4 @@ The database tables can be populated using the admin portal.
 
 ### API Documentation
 
-The swagger docs fot the API can be found by visiting http://localhost:8000/docs
+The swagger docs fot the API can be found by visiting <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
