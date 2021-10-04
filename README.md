@@ -1,0 +1,1 @@
+## Some fields in database schema are made optional for easy entry. 

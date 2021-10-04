@@ -12,7 +12,7 @@ class IsEval(models.IntegerChoices):
 
 class CourseInstructor(models.Model):
     coord = models.SmallIntegerField(choices=IsCoOrdinator.choices)
-    eval = models.SmallIntegerField(choices=IsEval.choices, default=IsEval.NOT_EVALUATOR)
+    eval = models.SmallIntegerField(choices=IsEval.choices, blank=True)
     courseId = models.ForeignKey(Course, on_delete=models.CASCADE)
     instructorId = models.ForeignKey(InstructorAppointment, on_delete=models.CASCADE)
     officeHours = models.TextField(blank=True)
