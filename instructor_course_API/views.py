@@ -6,7 +6,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from AARDVARC.accounts.authentication import ExpiringTokenAuthentication
 from rest_framework.authentication import BasicAuthentication
-from .models import Instructor, IsCoOrdinator
+from .models import Instructor, IsCoOrdinator, Active
 from rest_framework.authtoken.models import Token
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 import traceback
@@ -45,6 +45,7 @@ class InstructorCourseView(viewsets.ViewSet):
                 "program": program which the course belong to
                 "semester": semester in which the course in handled
                 "appointment_title": the title of the instructor's appointment
+                "is_appointment_active": is the instructor's appointment active
                 "instructor_role": tells whether, the instructor role is "instructor" or "co-ordinator"
                 "office_hours": the office hours of the instructor for the course
             }
@@ -67,13 +68,16 @@ class InstructorCourseView(viewsets.ViewSet):
                         "error": "instructor not found"
                     },status=404) 
                 instructor = instructors[0]
-                instructor_appointments = instructor.instructorappointment_set.filter(active = 1)
+                instructor_appointments = instructor.instructorappointment_set.all()
                 if not instructor_appointments or len(instructor_appointments) == 0:
                     return Response({
                         "error": "No instructor appointments for given instructor"
                     })
                 result = []
                 for instructor_appointment in instructor_appointments:
+                    is_appointment_active = 'NOT ACTIVE'
+                    if instructor_appointment.active == Active.ACTIVE:
+                        is_appointment_active = 'ACTIVE'
                     course_instructors = instructor_appointment.courseinstructor_set.all()
                     for course_instructor in course_instructors:
                         course = course_instructor.courseId
@@ -91,6 +95,7 @@ class InstructorCourseView(viewsets.ViewSet):
                             "program": course.programId,
                             "semester": course.semesterId,
                             "appointment_title": instructor_appointment.title,
+                            "is_appointment_active": is_appointment_active,
                             "instructor_role": instructor_role, 
                             "office_hours": course_instructor.officeHours
                      })

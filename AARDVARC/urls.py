@@ -10,7 +10,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 router = routers.DefaultRouter()
 router.register(r'auth_token',views.AuthView, basename='auth_token')
-router.register(r'course_code',views.InstructorCourseView, basename='instructor_course_code')
+router.register(r'courses',views.InstructorCourseView, basename='instructor_course_code')
 
 
 urlpatterns = [
