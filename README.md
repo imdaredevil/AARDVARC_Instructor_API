@@ -25,8 +25,7 @@ Run the server
 python3 manage.py runserver
 ```
 
-The admin portal can be accessed by visiting the URL http://localhost:8000/admin{:target="_blank"}
-
+The admin portal can be accessed by visiting the URL http://localhost:8000/admin
 The database tables can be populated using the admin portal. 
 
 ***Note:*** *In addition to the schema provided in the ER diagram, some fields are allowed to be left blank for easy creation of entries.* 
