@@ -68,16 +68,13 @@ class InstructorCourseView(viewsets.ViewSet):
                         "error": "instructor not found"
                     },status=404) 
                 instructor = instructors[0]
-                instructor_appointments = instructor.instructorappointment_set.all()
+                instructor_appointments = instructor.instructorappointment_set.filter(active = Active.ACTIVE)
                 if not instructor_appointments or len(instructor_appointments) == 0:
                     return Response({
                         "error": "No instructor appointments for given instructor"
                     })
                 result = []
                 for instructor_appointment in instructor_appointments:
-                    is_appointment_active = 'NOT ACTIVE'
-                    if instructor_appointment.active == Active.ACTIVE:
-                        is_appointment_active = 'ACTIVE'
                     course_instructors = instructor_appointment.courseinstructor_set.all()
                     for course_instructor in course_instructors:
                         course = course_instructor.courseId
@@ -95,13 +92,13 @@ class InstructorCourseView(viewsets.ViewSet):
                             "program": course.programId,
                             "semester": course.semesterId,
                             "appointment_title": instructor_appointment.title,
-                            "is_appointment_active": is_appointment_active,
                             "instructor_role": instructor_role, 
                             "office_hours": course_instructor.officeHours
                      })
                 return Response(result)
         except:
-                return Response({"error" : traceback.print_exc() }, status=500)
+            traceback.print_exc()
+            return Response({"error" : traceback.format_exc() }, status=500)
 
 
 
