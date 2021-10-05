@@ -30,7 +30,7 @@ class Course(models.Model):
     defaultEndTime = models.TimeField('default end time', blank=True, null=True)
     irregularTimes = models.SmallIntegerField(choices=isIrregularTime.choices, default=isIrregularTime.REGULAR_TIME)
     dow = models.CharField(max_length=7)
-    ohtime = models.TextField(blank=True, default='')
+    ohtime = models.TextField()
     location = models.CharField(max_length=200)
     description = models.TextField(blank=True, default='')
     courseNotes = models.TextField(blank=True, default='')

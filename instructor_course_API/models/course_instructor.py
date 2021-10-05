@@ -15,7 +15,7 @@ class CourseInstructor(models.Model):
     eval = models.SmallIntegerField(choices=IsEval.choices, null=True,blank=True)
     courseId = models.ForeignKey(Course, on_delete=models.CASCADE)
     instructorId = models.ForeignKey(InstructorAppointment, on_delete=models.CASCADE)
-    officeHours = models.TextField(blank=True)
+    officeHours = models.TextField()
     preferredContact = models.TextField(blank=True)
     def __str__(self):
         return self.courseId.title + "-" + self.instructorId.title
